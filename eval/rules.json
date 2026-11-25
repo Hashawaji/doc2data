@@ -1,0 +1,33 @@
+{
+  "extractor": "rules",
+  "model": null,
+  "documents": 20,
+  "field_accuracy": 0.86,
+  "per_field": {
+    "vendor_name": 0.8,
+    "customer_name": 0.6,
+    "invoice_number": 1.0,
+    "invoice_date": 0.9,
+    "due_date": 0.9,
+    "currency": 1.0,
+    "subtotal": 1.0,
+    "tax": 0.8,
+    "total": 1.0,
+    "line_items": 0.6
+  },
+  "fully_correct": 10,
+  "wrong_on_a_critical_field": 6,
+  "caught_by_validation": 1,
+  "silent_errors": [
+    "eu-01.pdf",
+    "eu-02.pdf",
+    "eu-03.pdf",
+    "eu-04.pdf",
+    "uk-02.pdf"
+  ],
+  "failed_to_read": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "list_price_cost_usd": "0",
+  "seconds": 0.04
+}

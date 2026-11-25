@@ -1,0 +1,177 @@
+{
+  "eu-01.pdf": {
+    "layout": "eu",
+    "note": "",
+    "invoice": {
+      "vendor_name": "Kranich Software GmbH",
+      "customer_name": "Nordlicht Handel AG",
+      "invoice_number": "2026-0411",
+      "invoice_date": "2026-10-18",
+      "due_date": "2026-11-17",
+      "currency": "EUR",
+      "subtotal": "465.00",
+      "tax": "88.35",
+      "total": "553.35",
+      "line_items": [
+        {
+          "description": "API integration",
+          "quantity": "1",
+          "unit_price": "275.00",
+          "amount": "275.00"
+        },
+        {
+          "description": "Data pipeline maintenance",
+          "quantity": "5",
+          "unit_price": "38.00",
+          "amount": "190.00"
+        }
+      ]
+    }
+  },
+  "freelance-01.pdf": {
+    "layout": "freelance",
+    "note": "",
+    "invoice": {
+      "vendor_name": "Sana Qureshi",
+      "customer_name": "Brightline Apps Ltd",
+      "invoice_number": "0031",
+      "invoice_date": "2026-09-11",
+      "due_date": "2026-10-11",
+      "currency": "USD",
+      "subtotal": null,
+      "tax": "0.00",
+      "total": "3750.00",
+      "line_items": [
+        {
+          "description": "Dashboard build",
+          "quantity": "8",
+          "unit_price": "300.00",
+          "amount": "2400.00"
+        },
+        {
+          "description": "Security audit",
+          "quantity": "3",
+          "unit_price": "450.00",
+          "amount": "1350.00"
+        }
+      ]
+    }
+  },
+  "pk-01.pdf": {
+    "layout": "pk",
+    "note": "",
+    "invoice": {
+      "vendor_name": "Indus Byte Solutions (Pvt) Ltd",
+      "customer_name": "Sarhad Textiles Ltd",
+      "invoice_number": "BL-7781",
+      "invoice_date": "2026-11-08",
+      "due_date": "2026-12-08",
+      "currency": "PKR",
+      "subtotal": "295000.00",
+      "tax": "50150.00",
+      "total": "345150.00",
+      "line_items": [
+        {
+          "description": "Load testing",
+          "quantity": "3",
+          "unit_price": "45000.00",
+          "amount": "135000.00"
+        },
+        {
+          "description": "Code review",
+          "quantity": "1",
+          "unit_price": "10000.00",
+          "amount": "10000.00"
+        },
+        {
+          "description": "Support hours",
+          "quantity": "20",
+          "unit_price": "7500.00",
+          "amount": "150000.00"
+        }
+      ]
+    }
+  },
+  "uk-02.pdf": {
+    "layout": "uk",
+    "note": "",
+    "invoice": {
+      "vendor_name": "Tidewater Digital Ltd",
+      "customer_name": "Fennel & Rye Foods Ltd",
+      "invoice_number": "2026/0452",
+      "invoice_date": "2026-09-08",
+      "due_date": "2026-10-08",
+      "currency": "GBP",
+      "subtotal": "3920.00",
+      "tax": "784.00",
+      "total": "4704.00",
+      "line_items": [
+        {
+          "description": "Code review",
+          "quantity": "8",
+          "unit_price": "40.00",
+          "amount": "320.00"
+        },
+        {
+          "description": "Monthly hosting",
+          "quantity": "12.5",
+          "unit_price": "120.00",
+          "amount": "1500.00"
+        },
+        {
+          "description": "Load testing",
+          "quantity": "10",
+          "unit_price": "180.00",
+          "amount": "1800.00"
+        },
+        {
+          "description": "Dashboard build",
+          "quantity": "1",
+          "unit_price": "300.00",
+          "amount": "300.00"
+        }
+      ]
+    }
+  },
+  "us-03.pdf": {
+    "layout": "us",
+    "note": "The printed total is 100.00 more than subtotal plus tax.",
+    "invoice": {
+      "vendor_name": "Northwind Data Co.",
+      "customer_name": "Acme Retail Inc.",
+      "invoice_number": "INV-1043",
+      "invoice_date": "2026-09-12",
+      "due_date": "2026-09-26",
+      "currency": "USD",
+      "subtotal": "4583.00",
+      "tax": "378.10",
+      "total": "5061.10",
+      "line_items": [
+        {
+          "description": "Security audit",
+          "quantity": "5",
+          "unit_price": "450.00",
+          "amount": "2250.00"
+        },
+        {
+          "description": "Backend API development",
+          "quantity": "1",
+          "unit_price": "45.00",
+          "amount": "45.00"
+        },
+        {
+          "description": "Load testing",
+          "quantity": "12.5",
+          "unit_price": "180.00",
+          "amount": "2250.00"
+        },
+        {
+          "description": "Data pipeline maintenance",
+          "quantity": "1",
+          "unit_price": "38.00",
+          "amount": "38.00"
+        }
+      ]
+    }
+  }
+}

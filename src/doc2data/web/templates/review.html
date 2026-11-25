@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Review queue · doc2data{% endblock %}
+{% block content %}
+<h1>Review queue</h1>
+<p class="muted">Documents that failed a check. Nothing here has been accepted. Check each one against the original file, then accept it or have the invoice corrected.</p>
+
+{% for document in documents %}
+<article class="review">
+  <div class="review-head">
+    <a href="/documents/{{ document.id }}"><strong>{{ document.filename }}</strong></a>
+    <span class="status {{ document.status }}">{{ document.status|replace("_", " ") }}</span>
+    {% if document.invoice %}
+      <span class="muted">{{ document.invoice.vendor_name or "unknown vendor" }} · {{ document.invoice.invoice_number or "no number" }}{% if document.invoice.total is not none %} · {{ document.invoice.total|money }} {{ document.invoice.currency or "" }}{% endif %}</span>
+    {% endif %}
+  </div>
+  {% if document.error %}<p class="issue error">{{ document.error }}</p>{% endif %}
+  <ul>
+  {% for issue in document.issues %}
+    <li class="issue {{ issue.severity }}">{{ issue.message }}</li>
+  {% endfor %}
+  </ul>
+  {% if document.status == "failed" %}<p class="muted">Upload the file again to retry.</p>{% endif %}
+  {% if document.status == "needs_review" %}
+  <form action="/documents/{{ document.id }}/approve" method="post">
+    <button type="submit">Accept as it stands</button>
+  </form>
+  {% endif %}
+</article>
+{% else %}
+<p class="empty">The queue is empty.</p>
+{% endfor %}
+{% endblock %}

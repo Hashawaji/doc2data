@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}doc2data{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <a class="brand" href="/">doc2data</a>
+    <nav>
+      <a href="/">Overview</a>
+      <a href="/review">Review queue{% if review_count %} <span class="badge">{{ review_count }}</span>{% endif %}</a>
+      <a href="/documents">Documents</a>
+      <a href="/export.csv">Export CSV</a>
+    </nav>
+    <form class="upload" action="/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" accept="application/pdf" required aria-label="Invoice PDF">
+      <button type="submit">Read invoice</button>
+    </form>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

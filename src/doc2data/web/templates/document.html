@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}{{ document.filename }} · doc2data{% endblock %}
+{% block content %}
+<h1>{{ document.filename }} <span class="status {{ document.status }}">{{ document.status|replace("_", " ") }}</span></h1>
+
+{% if reread_failed %}<p class="issue warning">This file was just read again and the new read failed, so the earlier result below was kept.</p>{% endif %}
+{% if document.error %}<p class="issue error">{{ document.error }}</p>{% endif %}
+{% if document.status == "failed" %}<p class="muted">Upload the file again to retry.</p>{% endif %}
+{% if document.issues %}
+<ul>
+  {% for issue in document.issues %}<li class="issue {{ issue.severity }}">{{ issue.message }}</li>{% endfor %}
+</ul>
+{% endif %}
+{% if document.status == "needs_review" %}
+<form action="/documents/{{ document.id }}/approve" method="post"><button type="submit">Accept as it stands</button></form>
+{% endif %}
+
+<section class="columns">
+  <div>
+    <h2>Invoice</h2>
+    {% set invoice = document.invoice %}
+    {% if invoice %}
+    <table>
+      <tbody>
+        <tr><td>Vendor</td><td>{{ invoice.vendor_name or "" }}</td></tr>
+        <tr><td>Customer</td><td>{{ invoice.customer_name or "" }}</td></tr>
+        <tr><td>Invoice number</td><td>{{ invoice.invoice_number or "" }}</td></tr>
+        <tr><td>Invoice date</td><td>{{ invoice.invoice_date or "" }}</td></tr>
+        <tr><td>Due date</td><td>{{ invoice.due_date or "" }}</td></tr>
+        <tr><td>Currency</td><td>{{ invoice.currency or "" }}</td></tr>
+        <tr><td>Subtotal</td><td class="num">{{ invoice.subtotal|money }}</td></tr>
+        <tr><td>Tax</td><td class="num">{{ invoice.tax|money }}</td></tr>
+        <tr><td>Total</td><td class="num"><strong>{{ invoice.total|money }}</strong></td></tr>
+      </tbody>
+    </table>
+    {% else %}
+    <p class="muted">No invoice could be read from this file.</p>
+    {% endif %}
+  </div>
+  <div>
+    <h2>How it was read</h2>
+    <table>
+      <tbody>
+        <tr><td>Extractor</td><td>{{ document.extractor }}{% if document.model %} ({{ document.model }}){% endif %}</td></tr>
+        <tr><td>Pages</td><td>{{ document.pages }}</td></tr>
+        <tr><td>Tokens in / out</td><td>{{ document.input_tokens }} / {{ document.output_tokens }}</td></tr>
+        <tr><td>Cost at list price</td><td>{{ document.cost_usd|cost }}</td></tr>
+        <tr><td>Time</td><td>{{ document.latency_ms }} ms</td></tr>
+        <tr><td>Received</td><td>{{ document.received_at|utc }} UTC</td></tr>
+        {% if document.reviewed_at %}<tr><td>Accepted by a person</td><td>{{ document.reviewed_at|utc }} UTC</td></tr>{% endif %}
+        <tr><td>SHA-256</td><td><code>{{ document.sha256[:16] }}…</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+{% if invoice and invoice.line_items %}
+<h2>Line items</h2>
+<table>
+  <thead><tr><th>#</th><th>Description</th><th class="num">Quantity</th><th class="num">Unit price</th><th class="num">Amount</th></tr></thead>
+  <tbody>
+  {% for item in invoice.line_items %}
+    <tr><td>{{ item.position }}</td><td>{{ item.description }}</td><td class="num">{{ item.quantity|quantity }}</td><td class="num">{{ item.unit_price|money }}</td><td class="num">{{ item.amount|money }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if document.raw_output %}
+<h2>Raw model output</h2>
+<pre>{{ document.raw_output }}</pre>
+{% endif %}
+{% endblock %}

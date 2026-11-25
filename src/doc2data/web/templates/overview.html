@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Overview · doc2data{% endblock %}
+{% block content %}
+<h1>Overview</h1>
+
+{% if stats.documents == 0 %}
+<p class="empty">Nothing has been read yet. Upload an invoice above, or run <code>make ingest</code> to read the bundled samples.</p>
+{% else %}
+<section class="cards">
+  <div class="card"><div class="number">{{ stats.documents }}</div><div class="label">documents read</div></div>
+  <div class="card ok"><div class="number">{{ stats.accepted }}</div><div class="label">accepted</div></div>
+  <div class="card warn"><div class="number">{{ stats.needs_review }}</div><div class="label"><a href="/review">need review</a></div></div>
+  <div class="card bad"><div class="number">{{ stats.failed }}</div><div class="label">failed</div></div>
+</section>
+
+<section class="columns">
+  <div>
+    <h2>Accepted totals by currency</h2>
+    <table>
+      <thead><tr><th>Currency</th><th class="num">Invoices</th><th class="num">Total</th></tr></thead>
+      <tbody>
+      {% for row in stats.by_currency %}
+        <tr><td>{{ row.currency }}</td><td class="num">{{ row.count }}</td><td class="num">{{ row.total|money }}</td></tr>
+      {% else %}
+        <tr><td colspan="3" class="muted">No accepted invoices yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    <h2>By month</h2>
+    <table>
+      <thead><tr><th>Month</th><th>Currency</th><th class="num">Total</th></tr></thead>
+      <tbody>
+      {% for row in stats.by_month %}
+        <tr><td>{{ row.month }}</td><td>{{ row.currency }}</td><td class="num">{{ row.total|money }}</td></tr>
+      {% else %}
+        <tr><td colspan="3" class="muted">No dated invoices yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <h2>By vendor</h2>
+    <table>
+      <thead><tr><th>Vendor</th><th>Currency</th><th class="num">Invoices</th><th class="num">Total</th></tr></thead>
+      <tbody>
+      {% for row in stats.by_vendor %}
+        <tr><td>{{ row.vendor }}</td><td>{{ row.currency }}</td><td class="num">{{ row.count }}</td><td class="num">{{ row.total|money }}</td></tr>
+      {% else %}
+        <tr><td colspan="4" class="muted">No accepted invoices yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    <h2>Cost of reading</h2>
+    <table>
+      <tbody>
+        <tr><td>Extractor in use</td><td class="num">{{ extractor }}</td></tr>
+        <tr><td>Tokens in / out</td><td class="num">{{ "{:,}".format(stats.input_tokens) }} / {{ "{:,}".format(stats.output_tokens) }}</td></tr>
+        <tr><td>Cost at list price</td><td class="num">${{ stats.cost_usd }}{% if stats.unpriced_documents %} (+{{ stats.unpriced_documents }} not priced){% endif %}</td></tr>
+        <tr><td>Average time per document</td><td class="num">{{ stats.average_latency_ms }} ms</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<h2>Latest documents</h2>
+{% include "_documents_table.html" %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% set rows = recent if recent is defined else documents %}
+<table>
+  <thead>
+    <tr><th>File</th><th>Status</th><th>Vendor</th><th>Invoice no.</th><th>Date</th><th class="num">Total</th><th>Read by</th></tr>
+  </thead>
+  <tbody>
+  {% for document in rows %}
+    <tr>
+      <td><a href="/documents/{{ document.id }}">{{ document.filename }}</a></td>
+      <td><span class="status {{ document.status }}">{{ document.status|replace("_", " ") }}</span></td>
+      <td>{{ (document.invoice.vendor_name or "") if document.invoice else "" }}</td>
+      <td>{{ (document.invoice.invoice_number or "") if document.invoice else "" }}</td>
+      <td>{{ document.invoice.invoice_date if document.invoice and document.invoice.invoice_date else "" }}</td>
+      <td class="num">{% if document.invoice and document.invoice.total is not none %}{{ document.invoice.total|money }} {{ document.invoice.currency or "" }}{% endif %}</td>
+      <td>{{ document.model or document.extractor }}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="7" class="muted">No documents.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
